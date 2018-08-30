@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/footer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center" >
+
+    <TextView
+        android:id="@+id/text_more"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_750_91"
+        android:layout_gravity="center|top"
+        android:gravity="center"
+        android:text="加载中…"
+        android:textSize="@dimen/size_small"
+        android:textColor="#999999"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/text_finish"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_750_91"
+        android:layout_gravity="center|top"
+        android:gravity="center"
+        android:text="没有更多了"
+        android:textSize="@dimen/size_small"
+        android:textColor="#999999"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/load_progress_bar_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:layout_gravity="center">
+        <com.zhouhua.juassistant.common_library.utils.http.view.ProgressWheel
+            xmlns:wheel="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/load_progress_bar"
+            android:layout_width="@dimen/dp_750_91"
+            android:layout_height="@dimen/dp_750_91"
+            android:layout_gravity="center|top"
+            android:padding="@dimen/dp_750_19"
+            wheel:barColor="#cccccc"
+            wheel:barWidth="@dimen/dp_750_5"
+            wheel:progressIndeterminate="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_750_91"
+            android:text="加载中…"
+            android:gravity="center"
+            android:textSize="@dimen/size_small"
+            android:textColor="#999999" />
+    </LinearLayout>
+
+</FrameLayout>

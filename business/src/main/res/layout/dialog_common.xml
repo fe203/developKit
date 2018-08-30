@@ -1,0 +1,92 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:id="@+id/dialpg_lp">
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_750_48"
+        android:paddingRight="@dimen/dp_750_48"
+        android:paddingTop="@dimen/dp_750_40"
+        android:paddingBottom="@dimen/dp_750_36"
+        android:text="提示"
+        android:textSize="@dimen/sp_750_40"
+        android:textColor="#333333"
+        android:ellipsize="end"
+        android:maxLines="2"/>
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_750_48"
+        android:paddingRight="@dimen/dp_750_48"
+        android:paddingBottom="@dimen/dp_750_30"
+        android:orientation="vertical">
+        <View
+            android:id="@+id/conetentSpace"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_750_40"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/textContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="这是一个测试功能，这是一个测试功能，这是一个测试功能。"
+            android:lineSpacingMultiplier="1.4"
+            android:textSize="@dimen/size_big"
+            android:textColor="#666666" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/long_text_list"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:overScrollMode="never"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btnLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_750_16"
+        android:gravity="right"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_750_36"
+            android:paddingRight="@dimen/dp_750_36"
+            android:paddingTop="@dimen/dp_750_17"
+            android:paddingBottom="@dimen/dp_750_17"
+            android:gravity="center"
+            android:background="@drawable/selector_bg_middle"
+            android:text="取消"
+            android:textSize="@dimen/size_big"
+            android:textColor="#666666" />
+
+        <Button
+            android:id="@+id/btnRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_750_36"
+            android:paddingRight="@dimen/dp_750_36"
+            android:paddingTop="@dimen/dp_750_17"
+            android:paddingBottom="@dimen/dp_750_17"
+            android:gravity="center"
+            android:background="@drawable/selector_bg_middle"
+            android:text="确认"
+            android:textSize="@dimen/size_big"
+            android:textColor="#666666" />
+
+    </LinearLayout>
+
+</LinearLayout>

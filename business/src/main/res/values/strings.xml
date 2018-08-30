@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">business</string>
+    <string name="how_to_open_permission">请在[设置]-[应用程序]-[%1$s]中允许%2$s使用[%3$s]功能</string>
+</resources>

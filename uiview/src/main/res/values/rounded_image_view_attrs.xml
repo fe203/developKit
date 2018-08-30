@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="BaseNetworkRoundedImageView">
+    <attr name="riv_corner_radius" format="dimension" />
+    <attr name="riv_border_width" format="dimension" />
+    <attr name="riv_border_color" format="color" />
+      <attr name="riv_corner_lt" format="boolean" />
+      <attr name="riv_corner_rt" format="boolean" />
+      <attr name="riv_corner_lb" format="boolean" />
+      <attr name="riv_corner_rb" format="boolean" />
+  </declare-styleable>
+</resources>
