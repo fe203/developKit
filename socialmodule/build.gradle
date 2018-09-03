@@ -3,8 +3,6 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 26
 
-
-
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 26
@@ -25,7 +23,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation "io.reactivex:rxjava:1.2.1"
+    implementation "io.reactivex:rxandroid:1.2.1"
+    implementation "com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+"
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
 
+    implementation project(path: ':uiview')
     implementation project(path: ':utils')
+    implementation project(path: ':fw')
 }

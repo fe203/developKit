@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">socialModule</string>
+
+    <string name="share_success">分享成功</string>
+    <string name="share_failed">分享失败</string>
+    <string name="share_cancel">分享取消</string>
+    <string name="share_wx_session">微信</string>
+    <string name="share_wx_timeline">朋友圈</string>
+    <string name="share_qq">QQ好友</string>
+    <string name="share_qzone">QQ空间</string>
+    <string name="share_ju_friend">好友</string>
+    <string name="share_ju_timeline">首页</string>
+    <string name="share_ju_chat">局聊天</string>
+    <string name="share_weibo">微博</string>
+    <string name="share_contact">通讯录</string>
+
+</resources>
