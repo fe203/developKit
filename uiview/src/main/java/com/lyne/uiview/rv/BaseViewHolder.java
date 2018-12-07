@@ -2,10 +2,9 @@ package com.lyne.uiview.rv;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 
 /**
@@ -18,13 +17,9 @@ public abstract  class BaseViewHolder<T> extends RecyclerView.ViewHolder  {
 
     protected RecyclerView mRecyclerView;
 
-
     private int mViewType;
 
-
     private T mCurrnetItem;
-
-
 
 
     public BaseViewHolder(View itemView) {
@@ -46,19 +41,9 @@ public abstract  class BaseViewHolder<T> extends RecyclerView.ViewHolder  {
         return mRecyclerView;
     }
 
-    public TextView findTextView(int id) {
-        return (TextView) (getItemView().findViewById(id));
+    public final <T extends View> T findViewById(@IdRes int id) {
+        return itemView.findViewById(id);
     }
-
-    public ImageView findImageView(int id) {
-        return (ImageView) (getItemView().findViewById(id));
-    }
-
-    public View findViewById(int id){
-        return  itemView.findViewById(id);
-    }
-
-
 
 
     public Context getContext(){
