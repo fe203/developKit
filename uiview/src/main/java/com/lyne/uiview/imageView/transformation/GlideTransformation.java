@@ -62,23 +62,44 @@ public class GlideTransformation extends BitmapTransformation {
 
     @Override
     protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
-        return roundCrop(pool, toTransform);
+        return roundCrop(pool, toTransform, outWidth, outHeight);
     }
 
-    private Bitmap roundCrop(BitmapPool pool, Bitmap source) {
+    private Bitmap roundCrop(BitmapPool pool, Bitmap source, int outWidth, int outHeight) {
         if (source == null) return null;
 
-        Bitmap result = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
+        if (outWidth > source.getWidth()){
+            outHeight = outHeight * source.getWidth() / outWidth;
+            outWidth = source.getWidth();
+        }
+
+        if (outHeight > source.getHeight()){
+            outWidth = outWidth * source.getHeight() / outHeight;
+            outHeight = source.getHeight();
+        }
+
+        Bitmap result = pool.get(outWidth, outHeight, Bitmap.Config.ARGB_8888);
         if (result == null) {
-            result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
+            result = Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888);
         }
 
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
-        paint.setShader(new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
-        paint.setAntiAlias(true);
-        RectF rectF = new RectF(0f, 0f, source.getWidth(), source.getHeight());
 
+        int x = 0, y = 0;
+        if (outWidth * source.getHeight() > outHeight * source.getWidth()){ //目标输出更宽
+            int dstHeight = outHeight * source.getWidth() / outWidth;
+            y = (source.getHeight() - dstHeight) / 2;
+        }else {
+            int dstWidth = source.getWidth() * outHeight / source.getHeight();
+            x = (source.getWidth() - dstWidth) / 2;
+        }
+
+        Bitmap sourceCrop = Bitmap.createBitmap(source, x, y, outWidth, outHeight);
+        paint.setShader(new BitmapShader(sourceCrop, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+        paint.setAntiAlias(true);
+
+        RectF rectF = new RectF(0f, 0f, outWidth, outHeight);
 
         if (mBorderWidth > 0) {
             canvas.drawRoundRect(rectF, Math.max(mCornerRadius, 0), Math.max(mCornerRadius, 0), paint);
@@ -99,6 +120,9 @@ public class GlideTransformation extends BitmapTransformation {
         } else {
             drawRoundRect(canvas, rectF, mCornerRadius, paint);
         }
+//        if (!sourceCrop.isRecycled()){
+//            sourceCrop.recycle();
+//        }
 
         return result;
     }
