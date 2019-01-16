@@ -1,6 +1,7 @@
 package com.lyne.uiview.rv;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,9 +15,9 @@ import com.lyne.uiview.R;
 
 public class LoadMoreFooterViewHolder extends BaseViewHolder implements PullUpLoader.OnLoadListener{
 
-    private TextView textMore;
     private View progressBarLayout;
     private TextView textFinish;
+    private String finishText;
 
     private PullUpLoader.OnLoadListener mLoaderListener;
     private PullUpLoader mLoader;
@@ -28,10 +29,14 @@ public class LoadMoreFooterViewHolder extends BaseViewHolder implements PullUpLo
         return holder;
     }
 
+    public void setFinishText(String finishText){
+        this.finishText = finishText;
+    }
+
+
     private LoadMoreFooterViewHolder(RecyclerView recyclerView) {
         super(View.inflate(recyclerView.getContext(), R.layout.view_refresh_list_footer, null));
         setRecyclerView(recyclerView);
-        textMore = itemView.findViewById(R.id.text_more);
         textFinish = itemView.findViewById(R.id.text_finish);
         progressBarLayout = itemView.findViewById(R.id.load_progress_bar_layout);
     }
@@ -46,7 +51,6 @@ public class LoadMoreFooterViewHolder extends BaseViewHolder implements PullUpLo
     private void startLoadingMore() {
         mLoader.setLoading(true);
         isLoadingMore = true;
-        textMore.setVisibility(View.GONE);
         textFinish.setVisibility(View.GONE);
         progressBarLayout.setVisibility(View.VISIBLE);
     }
@@ -69,15 +73,18 @@ public class LoadMoreFooterViewHolder extends BaseViewHolder implements PullUpLo
     }
 
     private void enableLoadMore() {
-        textMore.setVisibility(View.VISIBLE);
         progressBarLayout.setVisibility(View.GONE);
         textFinish.setVisibility(View.GONE);
     }
 
     private void disableLoadMore() {
-        textMore.setVisibility(View.GONE);
         progressBarLayout.setVisibility(View.GONE);
-        textFinish.setVisibility(View.GONE);
+        if (TextUtils.isEmpty(finishText)){
+            textFinish.setVisibility(View.GONE);
+        }else {
+            textFinish.setVisibility(View.VISIBLE);
+            textFinish.setText(finishText);
+        }
     }
     public boolean canLoadMore(){
         return mLoader.canLoadMore();
