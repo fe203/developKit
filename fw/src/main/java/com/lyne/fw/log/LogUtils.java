@@ -2,8 +2,6 @@ package com.lyne.fw.log;
 
 import android.util.Log;
 
-import com.lyne.fw.BuildConfig;
-
 
 public class LogUtils {
     public static final int LEVEL_DEBUG = 0;
@@ -17,13 +15,13 @@ public class LogUtils {
     }
 
     public static void print(Class claxx, String msg){
-        if(BuildConfig.DEBUG && logLevel <= LEVEL_DEBUG){
+        if(logLevel <= LEVEL_DEBUG){
             Log.d(LogUtils.class.getSimpleName() + "_" + (claxx == null? "" : claxx.getSimpleName()), msg);
         }
     }
 
     public static void warn(Class claxx, String message){
-        if(BuildConfig.DEBUG && logLevel <= LEVEL_WARN){
+        if(logLevel <= LEVEL_WARN){
             Log.w(LogUtils.class.getSimpleName() + "_" + (claxx == null? "" : claxx.getSimpleName()) , message);
         }
     }
