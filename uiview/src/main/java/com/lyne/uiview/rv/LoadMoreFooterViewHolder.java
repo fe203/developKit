@@ -15,29 +15,31 @@ import com.lyne.uiview.R;
 
 public class LoadMoreFooterViewHolder extends BaseViewHolder implements PullUpLoader.OnLoadListener{
 
+    private TextView textMore;
     private View progressBarLayout;
     private TextView textFinish;
-    private String finishText;
 
     private PullUpLoader.OnLoadListener mLoaderListener;
     private PullUpLoader mLoader;
     private boolean isLoadingMore;
-    public static LoadMoreFooterViewHolder create(RecyclerView recyclerView, PullUpLoader.OnLoadListener listener) {
 
-        LoadMoreFooterViewHolder holder = new LoadMoreFooterViewHolder(recyclerView);
+    public static LoadMoreFooterViewHolder create(RecyclerView recyclerView, PullUpLoader.OnLoadListener listener) {
+        return create(recyclerView, listener, "下拉加载更多", "没有更多了");
+    }
+
+    public static LoadMoreFooterViewHolder create(RecyclerView recyclerView, PullUpLoader.OnLoadListener listener, String defaultMore, String defaultFinish) {
+        LoadMoreFooterViewHolder holder = new LoadMoreFooterViewHolder(recyclerView, defaultMore, defaultFinish);
         holder.setPullLoaderListener(listener);
         return holder;
     }
 
-    public void setFinishText(String finishText){
-        this.finishText = finishText;
-    }
-
-
-    private LoadMoreFooterViewHolder(RecyclerView recyclerView) {
+    private LoadMoreFooterViewHolder(RecyclerView recyclerView, String defaultMore, String defaultFinish) {
         super(View.inflate(recyclerView.getContext(), R.layout.view_refresh_list_footer, null));
         setRecyclerView(recyclerView);
+        textMore = itemView.findViewById(R.id.text_more);
+        textMore.setText(defaultMore);
         textFinish = itemView.findViewById(R.id.text_finish);
+        textFinish.setText(defaultFinish);
         progressBarLayout = itemView.findViewById(R.id.load_progress_bar_layout);
     }
 
@@ -51,6 +53,7 @@ public class LoadMoreFooterViewHolder extends BaseViewHolder implements PullUpLo
     private void startLoadingMore() {
         mLoader.setLoading(true);
         isLoadingMore = true;
+        textMore.setVisibility(View.GONE);
         textFinish.setVisibility(View.GONE);
         progressBarLayout.setVisibility(View.VISIBLE);
     }
@@ -73,18 +76,15 @@ public class LoadMoreFooterViewHolder extends BaseViewHolder implements PullUpLo
     }
 
     private void enableLoadMore() {
+        textMore.setVisibility(View.VISIBLE);
         progressBarLayout.setVisibility(View.GONE);
         textFinish.setVisibility(View.GONE);
     }
 
     private void disableLoadMore() {
+        textMore.setVisibility(View.GONE);
         progressBarLayout.setVisibility(View.GONE);
-        if (TextUtils.isEmpty(finishText)){
-            textFinish.setVisibility(View.GONE);
-        }else {
-            textFinish.setVisibility(View.VISIBLE);
-            textFinish.setText(finishText);
-        }
+        textFinish.setVisibility(View.GONE);
     }
     public boolean canLoadMore(){
         return mLoader.canLoadMore();
