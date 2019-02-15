@@ -65,6 +65,11 @@ public class BaseNetworkRoundedImageView extends AppCompatImageView {
                 .setCornerEnable(isCornerLT, isCornerRT, isCornerLB, isCornerRB)
                 .setCornerRadius(cornerRadius);
     }
+
+    public void setRadius(int cornerRadius){
+        this.cornerRadius = cornerRadius;
+        mTransformation.setCornerRadius(cornerRadius);
+    }
     
     public void setDefaultDrawableRes(int res){
         defaultResId = res;
