@@ -102,6 +102,7 @@ public class GlideTransformation extends BitmapTransformation {
         RectF rectF = new RectF(0f, 0f, outWidth, outHeight);
 
         if (mBorderWidth > 0) {
+            rectF.inset((mBorderWidth) / 2, (mBorderWidth) / 2);
             canvas.drawRoundRect(rectF, Math.max(mCornerRadius, 0), Math.max(mCornerRadius, 0), paint);
 
             Paint mBorderPaint = new Paint();
@@ -110,13 +111,7 @@ public class GlideTransformation extends BitmapTransformation {
             mBorderPaint.setColor(borderColor);
             mBorderPaint.setStrokeWidth(mBorderWidth);
 
-            RectF mBorderRect = new RectF();
-
-            mBorderRect.set(rectF);
-            mBorderRect.inset((mBorderWidth) / 2, (mBorderWidth) / 2);
-
-            canvas.drawRoundRect(rectF, mCornerRadius, mCornerRadius, paint);
-            canvas.drawRoundRect(mBorderRect, mCornerRadius, mCornerRadius, mBorderPaint);
+            canvas.drawRoundRect(rectF, mCornerRadius, mCornerRadius, mBorderPaint);
         } else {
             drawRoundRect(canvas, rectF, mCornerRadius, paint);
         }
