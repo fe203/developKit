@@ -331,7 +331,7 @@ public class PhotoHelper implements PermissionManager.OnPermissionRequestListene
     }
 
     @Override
-    public void onPermissionRequestFailed(PermissionEnum permissionType, boolean rejectByUser) {
+    public void onPermissionRequestFailed(PermissionEnum permissionType, String permission, boolean rejectByUser) {
         resultListener.onPermissionDeny(permissionType, rejectByUser);
     }
 
