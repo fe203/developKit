@@ -138,7 +138,7 @@ public class PermissionManager {
             case PERMISSION_SEND_SMS:
                 return "发送信息";
             case PERMISSION_RECORD_AV:
-                return "录制";
+                return "录制视频";
             default:
                 return "";
         }

@@ -8,6 +8,10 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+
+        manifestPlaceholders = [
+                PACKAGE_NAME: "com.lyne.developkit",
+        ]
     }
 
     signingConfigs {
@@ -45,6 +49,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
+//    implementation 'com.github.fe203:developKit:0.22'
     implementation project(path: ':business')
     implementation project(path: ':uiview')
     implementation project(path: ':fw')
