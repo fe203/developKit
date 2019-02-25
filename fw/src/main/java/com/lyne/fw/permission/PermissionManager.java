@@ -75,6 +75,23 @@ public class PermissionManager {
         return true;
     }
 
+    public String getUngrantedPermission(Context context, PermissionEnum permissionType){
+        if(Build.VERSION.SDK_INT< Build.VERSION_CODES.M){
+            return null;
+        }
+        String[] permissions = getPermissionStringByType(permissionType);
+        if (permissions == null){
+            return null;
+        }
+        for (String permission : permissions){
+            if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED){
+                return permission;
+            }
+        }
+
+        return null;
+    }
+
     private boolean isRejectByUser(){
         return System.currentTimeMillis() - lastReqPermissionTime > 1000;
     }
