@@ -47,9 +47,9 @@ public class PermissionManager {
         PermissionManager.OnPermissionRequestListener listener = PermissionManager.getInstance().getOnPermissionRequestListener();
         if (listener != null && grantResults.length > 0) {
 
-            for (int result : grantResults){
-                if (result == PackageManager.PERMISSION_DENIED){
-                    listener.onPermissionRequestFailed(getEnum(requestCode), PermissionManager.getInstance().isRejectByUser());
+            for (int i = 0; i < permissions.length; i++){
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED){
+                    listener.onPermissionRequestFailed(getEnum(requestCode), permissions[i], isRejectByUser());
                     return;
                 }
             }
@@ -83,6 +83,8 @@ public class PermissionManager {
         switch (permission){
             case PERMISSION_CAMERA:
                 return new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            case PERMISSION_RECORD_AV:
+                return new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
             case PERMISSION_RECORD_AUDIO:
                 return new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
             case PERMISSION_FINE_LOCATION:
@@ -135,6 +137,8 @@ public class PermissionManager {
                 return "啊啊";
             case PERMISSION_SEND_SMS:
                 return "发送信息";
+            case PERMISSION_RECORD_AV:
+                return "录制";
             default:
                 return "";
         }
@@ -150,7 +154,7 @@ public class PermissionManager {
          * @param permissionType
          * @param rejectByUser 是否用户此次手动拒绝权限弹框
          */
-        void onPermissionRequestFailed(PermissionEnum permissionType, boolean rejectByUser);
+        void onPermissionRequestFailed(PermissionEnum permissionType, String permission, boolean rejectByUser);
     }
 
 }
