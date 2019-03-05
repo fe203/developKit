@@ -16,9 +16,6 @@ android {
                 MTA_CHANNEL:"debug",
         ]
 
-        ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86"
-        }
     }
 
     signingConfigs {
