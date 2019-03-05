@@ -11,7 +11,14 @@ android {
 
         manifestPlaceholders = [
                 PACKAGE_NAME: "com.lyne.developkit",
+                qqId: "101553813",
+                MTA_APPKEY:"AYHQ1HVD961C",
+                MTA_CHANNEL:"debug",
         ]
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+        }
     }
 
     signingConfigs {
@@ -54,4 +61,5 @@ dependencies {
     implementation project(path: ':uiview')
     implementation project(path: ':fw')
     implementation project(path: ':utils')
+    implementation project(path: ':socialmodule')
 }

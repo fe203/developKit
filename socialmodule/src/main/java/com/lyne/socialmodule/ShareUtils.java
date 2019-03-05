@@ -64,6 +64,12 @@ public class ShareUtils {
             return;
         }
 
+        if (!mShareInstance.isInstall(activity)) {
+            mShareListener.shareFailure(new Exception("应用未安装"));
+            activity.finish();
+            return;
+        }
+
         switch (mType) {
             case TYPE_TEXT:
                 mShareInstance.shareText(mPlatform, mText);

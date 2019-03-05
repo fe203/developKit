@@ -100,14 +100,6 @@ public class WeiboShare implements BaseShare {
                         ImageObject imageObject = new ImageObject();
                         imageObject.setImageObject(pair.first);
                         message.imageObject = imageObject;
-
-//                        WebpageObject mediaObject = new WebpageObject();
-//                        mediaObject.setThumbImage(pair.first);
-//                        mediaObject.identify = Utility.generateGUID();
-//                        mediaObject.title = title;
-//                        mediaObject.description = summary;
-//                        mediaObject.actionUrl = targetUrl;
-//                        message.mediaObject = mediaObject;
                         sendRequest(message);
                     }
                 }, new Action1<Throwable>() {
@@ -164,7 +156,7 @@ public class WeiboShare implements BaseShare {
 
     @Override
     public boolean isInstall(Context context) {
-        return false;
+        return mShareHandler.isWbAppInstalled();
     }
 
     @Override

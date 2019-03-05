@@ -46,7 +46,7 @@ public class QQShare implements BaseShare {
 
             @Override
             public final void onError(UiError uiError) {
-                mShareListener.shareFailure(new Exception(uiError == null ? "DEFAULT_QQ_SHARE_ERROR" : uiError.errorDetail));
+                mShareListener.shareFailure(new Exception(uiError == null ? "DEFAULT_QQ_SHARE_ERROR" : uiError.errorMessage));
             }
 
             @Override
