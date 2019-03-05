@@ -65,7 +65,7 @@ public class ShareUtils {
         }
 
         if (!mShareInstance.isInstall(activity)) {
-            mShareListener.shareFailure(new Exception("应用未安装"));
+            mShareListener.shareFailure(new Exception("您尚未安装应用"));
             activity.finish();
             return;
         }
