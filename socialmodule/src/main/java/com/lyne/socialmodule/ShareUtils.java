@@ -10,9 +10,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 
 import com.lyne.socialmodule.share.BaseShare;
+import com.lyne.socialmodule.share.QQShare;
 import com.lyne.socialmodule.share.ShareImageObject;
 import com.lyne.socialmodule.share.ShareListener;
 import com.lyne.socialmodule.share.WXShare;
+import com.lyne.socialmodule.share.WeiboShare;
 
 
 /**
@@ -162,6 +164,11 @@ public class ShareUtils {
 
     private static BaseShare getShareInstance() {
         switch (mPlatform) {
+            case QQ:
+            case QZONE:
+                return new QQShare(mActivity, ShareConfig.get().getQqId(), mShareListener);
+            case WEIBO:
+                return new WeiboShare(mActivity, ShareConfig.get().getWeiboId(), ShareConfig.get().getWeiboRedirectUrl(), mShareListener);
             case WX:
             case WX_TIMELINE:
             default:

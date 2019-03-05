@@ -27,6 +27,8 @@ dependencies {
     implementation "io.reactivex:rxandroid:1.2.1"
     implementation "com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+"
     implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+    implementation 'com.sina.weibo.sdk:core:4.2.7:openDefaultRelease@aar'
+    implementation files('libs/open_sdk_r5788_lite.jar')
 
     implementation project(path: ':uiview')
     implementation project(path: ':utils')
