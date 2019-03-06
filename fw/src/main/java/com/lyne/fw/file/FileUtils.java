@@ -2,12 +2,12 @@ package com.lyne.fw.file;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore.Images;
 import android.text.TextUtils;
-
 
 import com.lyne.fw.log.LogUtils;
 
@@ -43,6 +43,7 @@ public class FileUtils {
     public static final String DIR_APK = "Apk";
     public static final String DIR_IM = "IM";
 
+    private static String dirName = null;
 
     /**
      * 获取文件Url
@@ -100,11 +101,28 @@ public class FileUtils {
     }
 
     private static String getAppName(Context context){
-        String appName = "";
-        if (TextUtils.isEmpty(appName)){
-            appName = context.getPackageName();
+
+        if (TextUtils.isEmpty(dirName)){
+            dirName = getAppMetaDataName(context, "storage_dir_name");
         }
-        return appName;
+
+        if (TextUtils.isEmpty(dirName)){
+            dirName = context.getPackageName();
+        }
+
+        return dirName;
+    }
+
+    private static String getAppMetaDataName(Context context, String metaName) {
+        try {
+            String value = context.getPackageManager()
+                    .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA)
+                    .metaData.getString(metaName);
+            return value;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     private static File getAppDir(Context context) {

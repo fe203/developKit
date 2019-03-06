@@ -55,14 +55,6 @@ public class ImageUtils {
         }
     }
 
-    public static void saveImg(Context context, File fromFile){
-        final File toFile = new File(FileUtils.getStorageDir(context), System.currentTimeMillis() + ".jpg");
-        FileUtils.fileChannelCopy(fromFile, toFile);
-        //把文件插入到系统图库
-        notifyScanFile(context, toFile);
-}
-
-
 
     /**
      * Insert an image and create a thumbnail for it.

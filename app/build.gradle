@@ -10,12 +10,12 @@ android {
         versionName "1.0"
 
         manifestPlaceholders = [
-                PACKAGE_NAME: "com.lyne.developkit",
-                qqId: "101553813",
-                MTA_APPKEY:"AYHQ1HVD961C",
-                MTA_CHANNEL:"debug",
+            PACKAGE_NAME: "com.lyne.developkit",
+            qqId: "101553813",
+            MTA_APPKEY:"AYHQ1HVD961C",
+            MTA_CHANNEL:"debug",
+            STORAGE_DIR_NAME:"developkit",
         ]
-
     }
 
     signingConfigs {

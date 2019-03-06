@@ -1,2 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lyne.fw" />
+    package="com.lyne.fw" >
+
+    <application>
+        <meta-data android:name="storage_dir_name"
+            android:value="${STORAGE_DIR_NAME}"/>
+    </application>
+
+</manifest>
