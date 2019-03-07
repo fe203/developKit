@@ -5,16 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Pair;
 
 import com.lyne.socialmodule.ShareUtils;
 import com.sina.weibo.sdk.WbSdk;
 import com.sina.weibo.sdk.api.ImageObject;
 import com.sina.weibo.sdk.api.TextObject;
+import com.sina.weibo.sdk.api.VideoSourceObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.share.WbShareCallback;
 import com.sina.weibo.sdk.share.WbShareHandler;
+
+import java.io.File;
 
 import rx.Emitter;
 import rx.Observable;
@@ -113,13 +117,12 @@ public class WeiboShare implements BaseShare {
     @Override
     public void shareImage(ShareUtils.SharePlatform platform, final ShareImageObject shareImageObject) {
 
-        Observable.fromEmitter(new Action1<Emitter<Pair<Bitmap, byte[]>>>() {
+        Observable.fromEmitter(new Action1<Emitter<Bitmap>>() {
             @Override
-            public void call(Emitter<Pair<Bitmap, byte[]>> emitter) {
+            public void call(Emitter<Bitmap> emitter) {
                 try {
                     String imagePath = ImageDecoder.decode(mActivity.getApplicationContext(), shareImageObject);
-                    emitter.onNext(Pair.create(BitmapFactory.decodeFile(imagePath),
-                            ImageDecoder.compress2Byte(imagePath, -1, -1)));
+                    emitter.onNext(BitmapFactory.decodeFile(imagePath));
                 } catch (Exception e) {
                     emitter.onError(e);
                 }
@@ -127,12 +130,12 @@ public class WeiboShare implements BaseShare {
         }, Emitter.BackpressureMode.BUFFER)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Pair<Bitmap, byte[]>>() {
+                .subscribe(new Action1<Bitmap>() {
                     @Override
-                    public void call(Pair<Bitmap, byte[]> pair) {
+                    public void call(Bitmap bitmap) {
                         WeiboMultiMessage message = new WeiboMultiMessage();
                         ImageObject imageObject = new ImageObject();
-                        imageObject.setImageObject(pair.first);
+                        imageObject.setImageObject(bitmap);
                         message.imageObject = imageObject;
                         sendRequest(message);
                     }
@@ -142,6 +145,48 @@ public class WeiboShare implements BaseShare {
                         mShareListener.shareFailure(new Exception(throwable));
                     }
                 });
+    }
+
+    @Override
+    public void shareVideo(ShareUtils.SharePlatform platform, final String title, final String targetUrl, final String summary, final ShareImageObject shareImageObject) {
+
+        Observable.fromEmitter(new Action1<Emitter<String>>() {
+            @Override
+            public void call(Emitter<String> emitter) {
+                try {
+                    String imagePath = ImageDecoder.decode(mActivity.getApplicationContext(), shareImageObject);
+                    emitter.onNext(imagePath);
+                } catch (Exception e) {
+                    emitter.onError(e);
+                }
+            }
+        }, Emitter.BackpressureMode.BUFFER)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String path) {
+
+                        WeiboMultiMessage message = new WeiboMultiMessage();
+
+                        TextObject textObject = new TextObject();
+                        textObject.text = summary;
+                        textObject.title = title;
+                        message.textObject = textObject;
+
+                        VideoSourceObject videoSourceObject = new VideoSourceObject();
+                        videoSourceObject.coverPath = Uri.fromFile(new File(path));
+                        videoSourceObject.videoPath = Uri.fromFile(new File(targetUrl));
+                        message.videoSourceObject = videoSourceObject;
+                        sendRequest(message);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mShareListener.shareFailure(new Exception(throwable));
+                    }
+                });
+
     }
 
     @Override

@@ -133,6 +133,15 @@ public class QQShare implements BaseShare {
     }
 
     @Override
+    public void shareVideo(final ShareUtils.SharePlatform platform, final String title, final String targetUrl, final String summary, final ShareImageObject shareImageObject) {
+        if (platform == ShareUtils.SharePlatform.QZONE) {
+            shareToQQForVideo(title, summary, targetUrl);
+        } else {
+            shareToQzoneForVideo(title, summary, targetUrl);
+        }
+    }
+
+    @Override
     public void shareMP(String path, String title, String targetUrl, String summary, ShareImageObject shareImageObject) {
         mShareListener.shareFailure(new Exception("QQ木有小程序，你是呆子吗"));
     }
@@ -186,6 +195,15 @@ public class QQShare implements BaseShare {
         mTencent.shareToQQ(mActivity, params, mIUiListener);
     }
 
+    private void shareToQQForVideo(String title, String summary, String audioUrl) {
+        Bundle params = new Bundle();
+        params.putInt(com.tencent.connect.share.QQShare.SHARE_TO_QQ_KEY_TYPE, com.tencent.connect.share.QQShare.SHARE_TO_QQ_TYPE_AUDIO);
+        params.putString(com.tencent.connect.share.QQShare.SHARE_TO_QQ_AUDIO_URL, audioUrl);
+        params.putString(com.tencent.connect.share.QQShare.SHARE_TO_QQ_TITLE, title);
+        params.putString(com.tencent.connect.share.QQShare.SHARE_TO_QQ_SUMMARY, summary);
+        mTencent.shareToQQ(mActivity, params, mIUiListener);
+    }
+
     private void shareToQZoneForText(String text) {
         final Bundle params = new Bundle();
         params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE,
@@ -214,6 +232,17 @@ public class QQShare implements BaseShare {
         params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE,
                 QzonePublish.PUBLISH_TO_QZONE_TYPE_PUBLISHMOOD);
         params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, image);
+        mTencent.publishToQzone(mActivity, params, mIUiListener);
+    }
+
+    private void shareToQzoneForVideo(String title, String summary, String audioUrl) {
+        final Bundle params = new Bundle();
+        params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE,
+                QzonePublish.PUBLISH_TO_QZONE_TYPE_PUBLISHVIDEO);
+        params.putString(QzoneShare.SHARE_TO_QQ_TITLE, title);
+        params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, summary);
+        params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, audioUrl);
+        params.putString(QzoneShare.SHARE_TO_QQ_AUDIO_URL, audioUrl);
         mTencent.publishToQzone(mActivity, params, mIUiListener);
     }
 }

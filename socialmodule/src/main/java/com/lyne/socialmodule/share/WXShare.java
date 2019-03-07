@@ -18,6 +18,7 @@ import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
 import com.tencent.mm.opensdk.modelmsg.WXTextObject;
+import com.tencent.mm.opensdk.modelmsg.WXVideoObject;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
@@ -132,6 +133,45 @@ public class WXShare implements BaseShare {
                         message.thumbData = pair.second;
 
                         sendMessage(platform, message, buildTransaction("image"));
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mShareListener.shareFailure(new Exception(throwable));
+                    }
+                });
+    }
+
+    @Override
+    public void shareVideo(final ShareUtils.SharePlatform platform, final String title, final String targetUrl, final String summary, final ShareImageObject shareImageObject) {
+        Observable.fromEmitter(new Action1<Emitter<byte[]>>() {
+
+            @Override
+            public void call(Emitter<byte[]> emitter) {
+                try {
+                    String imagePath = ImageDecoder.decode(mActivity.getApplicationContext(), shareImageObject);
+                    emitter.onNext(ImageDecoder.compress2Byte(imagePath, TARGET_SIZE, THUMB_SIZE));
+                } catch (Exception e) {
+                    emitter.onError(e);
+                }
+            }
+        }, Emitter.BackpressureMode.DROP)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<byte[]>() {
+                    @Override
+                    public void call(byte[] bytes) {
+
+                        WXVideoObject videoObject = new WXVideoObject();
+                        videoObject.videoUrl = targetUrl;
+
+                        WXMediaMessage message = new WXMediaMessage();
+                        message.mediaObject = videoObject;
+                        message.thumbData = bytes;
+                        message.title = title;
+                        message.description = summary;
+
+                        sendMessage(platform, message, buildTransaction("video"));
                     }
                 }, new Action1<Throwable>() {
                     @Override

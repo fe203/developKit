@@ -19,6 +19,8 @@ public interface BaseShare {
 
     void shareImage(ShareUtils.SharePlatform platform, ShareImageObject shareImageObject);
 
+    void shareVideo(ShareUtils.SharePlatform platform, String title, String targetUrl, String summary, ShareImageObject shareImageObject);
+
     void shareMP(String path, String title, String targetUrl, String summary, ShareImageObject shareImageObject);
 
     void handleResult(Intent data);
