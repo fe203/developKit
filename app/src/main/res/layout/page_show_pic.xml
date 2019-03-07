@@ -14,7 +14,7 @@
         app:riv_corner_lb="false"
         app:riv_corner_rb="false"/>
 
-    <com.lyne.uiview.imageView.BaseNetworkImageView
+    <ImageView
         android:id="@+id/img_normal"
         android:layout_marginTop="@dimen/dp_750_100"
         android:layout_width="@dimen/dp_750_200"

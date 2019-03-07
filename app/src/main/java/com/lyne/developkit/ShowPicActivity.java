@@ -1,9 +1,14 @@
 package com.lyne.developkit;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import com.lyne.uiview.imageView.BaseNetworkImageView;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.lyne.fw.image.ImageUtils;
 import com.lyne.uiview.imageView.BaseNetworkRoundedImageView;
 
 /**
@@ -18,13 +23,32 @@ public class ShowPicActivity extends AppCompatActivity {
 
         setContentView(R.layout.page_show_pic);
 
-        BaseNetworkImageView imgNormal = findViewById(R.id.img_normal);
-        BaseNetworkRoundedImageView imgRound = findViewById(R.id.img_round);
+        final ImageView imgNormal = findViewById(R.id.img_normal);
+        final BaseNetworkRoundedImageView imgRound = findViewById(R.id.img_round);
 
         String imgUrl = "https://i3.meishichina.com/attachment/recipe/2017/02/12/2017021214868864303048471547.JPG?x-oss-process=style/c320";
 
-        imgNormal.setImageUrl(imgUrl, imgUrl);
         imgRound.setImageUrl(imgUrl, imgUrl);
 
+        imgRound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Bitmap bitmap = drawContentView(imgRound);
+                    ImageUtils.saveBitmap(ShowPicActivity.this, bitmap, "picpic.jpeg", true);
+                    imgNormal.setImageBitmap(bitmap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    private Bitmap drawContentView(View contentView){
+        Bitmap bitmap = Bitmap.createBitmap(contentView.getWidth(), contentView.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bitmap);
+        contentView.draw(c);
+        return bitmap;
     }
 }
