@@ -42,6 +42,7 @@ public class ShareUtils {
     private final static int TYPE_TEXT = 2;
     private final static int TYPE_MEDIA = 3;
     private final static int TYPE_MP = 4;
+    private final static int TYPE_VIDEO = 5;
 
     private static int mType;
     private static SharePlatform mPlatform;
@@ -82,6 +83,9 @@ public class ShareUtils {
                 break;
             case TYPE_MP:
                 mShareInstance.shareMP(mPath, mTitle, mTargetUrl, mSummary, mShareImageObject);
+                break;
+            case TYPE_VIDEO:
+                mShareInstance.shareVideo(mPlatform, mTitle, mTargetUrl, mSummary, mShareImageObject);
         }
     }
 
@@ -110,6 +114,19 @@ public class ShareUtils {
         mType = TYPE_IMAGE;
         mPlatform = platform;
         mShareImageObject = new ShareImageObject(bitmap, defaultImgResId);
+        mShareListener = buildProxyListener(listener);
+
+        context.startActivity(ShareActivity.newInstance(context, 1));
+    }
+
+    public static void shareVideo(Context context, SharePlatform platform,
+                                  String title, String summary, String targetUrl, String thumbUrl, int defaultImgResId, ShareListener listener) {
+        mType = TYPE_VIDEO;
+        mPlatform = platform;
+        mSummary = summary;
+        mTargetUrl = targetUrl;
+        mTitle = title;
+        mShareImageObject = new ShareImageObject(thumbUrl, defaultImgResId);
         mShareListener = buildProxyListener(listener);
 
         context.startActivity(ShareActivity.newInstance(context, 1));
