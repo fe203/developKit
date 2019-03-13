@@ -759,18 +759,6 @@ public class ImageUtils {
         return dstFile.getPath();
     }
 
-    private static void mixtureBitmap(Bitmap first, Bitmap second, PointF fromPoint) {
-        if (first == null || second == null || fromPoint == null) {
-            return;
-        }
-        Canvas cv = new Canvas(first);
-        cv.drawBitmap(first, 0, 0, null);
-        cv.drawBitmap(second, fromPoint.x, fromPoint.y, null);
-        cv.save(Canvas.ALL_SAVE_FLAG);
-        cv.restore();
-    }
-
-
 
     public interface OnFetchThumbListener{
         public void onFetchThumbFinished(Bitmap thumb);
