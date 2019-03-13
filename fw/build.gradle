@@ -1,15 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-
-
+    compileSdkVersion rootProject.ext.configuration.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.configuration.minSdkVersion
+        targetSdkVersion rootProject.ext.configuration.targetSdkVersion
+        versionCode rootProject.ext.configuration.versionCode
+        versionName rootProject.ext.configuration.versionName
 
     }
 
@@ -25,7 +23,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation "com.android.support:appcompat-v7:${support_version}"
 
     implementation project(path: ':utils')
 }
