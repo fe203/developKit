@@ -91,7 +91,7 @@ public class GlideTransformation extends BitmapTransformation {
             int dstHeight = outHeight * source.getWidth() / outWidth;
             y = (source.getHeight() - dstHeight) / 2;
         }else {
-            int dstWidth = source.getWidth() * outHeight / source.getHeight();
+            int dstWidth = source.getHeight() * outWidth / outHeight;
             x = (source.getWidth() - dstWidth) / 2;
         }
 
