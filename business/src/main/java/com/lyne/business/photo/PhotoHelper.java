@@ -52,6 +52,8 @@ public class PhotoHelper implements PermissionManager.OnPermissionRequestListene
     private int ratioX = 1, ratioY = 1; //宽与高之比
     private boolean supplyTake = true;
     private boolean supplyPick = true;
+    private String take = "拍照";
+    private String pick = "相册";
 
     private List<String> photoList = new ArrayList<>();
     private List<String> needCropPathList = new ArrayList<>();
@@ -106,6 +108,11 @@ public class PhotoHelper implements PermissionManager.OnPermissionRequestListene
         this.supplyPick = supplyPick;
     }
 
+    public void setActionName(String take, String pick){
+        this.take = take;
+        this.pick = pick;
+    }
+
     /**
      * 显示拍照或从相册选择的对话框
      *
@@ -114,8 +121,8 @@ public class PhotoHelper implements PermissionManager.OnPermissionRequestListene
         if (supplyPick && supplyTake){
 
             List<ActionItem> itemList = new ArrayList<>();
-            itemList.add(new ActionItem("拍照"));
-            itemList.add(new ActionItem("相册"));
+            itemList.add(new ActionItem(take));
+            itemList.add(new ActionItem(pick));
 
             ActionSheetDialog.Builder builder = new ActionSheetDialog.Builder(activity)
                     .setNavigateButton("取消")
