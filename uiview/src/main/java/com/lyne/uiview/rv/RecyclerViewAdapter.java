@@ -1,6 +1,7 @@
 package com.lyne.uiview.rv;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,7 +55,7 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseVi
         if(mHeaderViewHelper.contains(viewType)){
             //header不做处理
             return ;//
-        };
+        }
         if(mFooterViewHelper.contains(viewType)){
             //footer不做处理
             return;
@@ -65,9 +66,28 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseVi
 //
     }
 
-    public void bindViewData(BaseViewHolder holder,T item, int position, int mViewType) {
+    @Override
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position, @NonNull List<Object> payloads) {
+        int viewType =holder.getItemViewType();
+        if(mHeaderViewHelper.contains(viewType)){
+            //header不做处理
+            return ;//
+        }
+        if(mFooterViewHelper.contains(viewType)){
+            //footer不做处理
+            return;
+        }
+        T item = null;
+        item = getItem(regulatePosition(position));
+        bindViewData(holder, item,position, getItemViewType(position), payloads);
+    }
 
-        holder.bindItemData(position, item, mViewType);
+    public void bindViewData(BaseViewHolder holder, T item, int position, int mViewType) {
+        bindViewData(holder, item, position, mViewType, null);
+    }
+
+    public void bindViewData(BaseViewHolder holder, T item, int position, int mViewType, List<Object> payLoads) {
+        holder.bindItemData(position, item, mViewType, payLoads);
     }
 
     @Override
