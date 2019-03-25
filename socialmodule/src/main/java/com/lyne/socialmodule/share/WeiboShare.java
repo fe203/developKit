@@ -196,7 +196,9 @@ public class WeiboShare implements BaseShare {
 
     @Override
     public void handleResult(Intent data) {
-        mShareHandler.doResultIntent(data, mShareCallback);
+        if (data != null){
+            mShareHandler.doResultIntent(data, mShareCallback);
+        }
     }
 
     @Override

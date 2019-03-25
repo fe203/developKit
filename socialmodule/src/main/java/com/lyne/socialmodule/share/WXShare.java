@@ -223,6 +223,9 @@ public class WXShare implements BaseShare {
 
     @Override
     public void handleResult(Intent data) {
+        if (data == null){
+            return;
+        }
         mIWXAPI.handleIntent(data, new IWXAPIEventHandler() {
             @Override
             public void onReq(BaseReq baseReq) {
