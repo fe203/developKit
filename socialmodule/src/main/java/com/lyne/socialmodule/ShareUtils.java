@@ -180,7 +180,7 @@ public class ShareUtils {
 
     public static void handleResult(Intent data) {
         // 微博分享会同时回调onActivityResult和onNewIntent， 而且前者返回的intent为null
-        if (mShareInstance != null) {
+        if (mShareInstance != null && data != null) {
             mShareInstance.handleResult(data);
         }
     }

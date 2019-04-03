@@ -3,10 +3,9 @@ package com.lyne.socialmodule.share;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.text.TextUtils;
 
-import com.lyne.socialmodule.R;
+import com.lyne.fw.file.FileUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -29,8 +28,6 @@ import okio.Okio;
  */
 
 public class ImageDecoder {
-
-    private static final String FILE_NAME = "share_image.jpg";
 
     public static String decode(Context context, ShareImageObject imageObject) throws Exception{
         File resultFile = cacheFile(context);
@@ -87,13 +84,8 @@ public class ImageDecoder {
         return resultFile.getAbsolutePath();
     }
 
-    private static File cacheFile(Context context) throws Exception {
-        String state = Environment.getExternalStorageState();
-        if (state != null && state.equals(Environment.MEDIA_MOUNTED)) {
-            return new File(context.getExternalFilesDir(""), FILE_NAME);
-        } else {
-            throw new Exception("SD_CARD_NOT_AVAILABLE");
-        }
+    private static File cacheFile(Context context) {
+        return new File(FileUtils.getCacheChildDir(context.getApplicationContext(), FileUtils.getAppName(context.getApplicationContext())), System.currentTimeMillis() + ".jpeg");
     }
 
     private static void copyFile(InputStream inputStream, OutputStream outputStream)

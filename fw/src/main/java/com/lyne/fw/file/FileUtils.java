@@ -100,7 +100,7 @@ public class FileUtils {
         return dir;
     }
 
-    private static String getAppName(Context context){
+    public static String getAppName(Context context){
 
         if (TextUtils.isEmpty(dirName)){
             dirName = getAppMetaDataName(context, "storage_dir_name");
