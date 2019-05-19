@@ -62,9 +62,17 @@ public class BaseNetworkImageView extends AppCompatImageView {
         }
 
         if(listener == null){
-            Glide.with(getContext()).setDefaultRequestOptions(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).error(defaultResId)).asBitmap().load(thumbUrl).into(this);
+            Glide.with(getContext())
+                    .asBitmap()
+                    .load(thumbUrl)
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).error(defaultResId))
+                    .into(this);
         }else {
-            Glide.with(getContext()).setDefaultRequestOptions(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).error(defaultResId)).asBitmap().load(thumbUrl).listener(
+            Glide.with(getContext())
+                    .asBitmap()
+                    .load(thumbUrl)
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).error(defaultResId))
+                    .listener(
                     new RequestListener<Bitmap>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
@@ -95,7 +103,10 @@ public class BaseNetworkImageView extends AppCompatImageView {
             }
         }
 
-        Glide.with(getContext()).setDefaultRequestOptions(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).override(width, height).error(defaultResId)).asBitmap().into(this);
+        Glide.with(getContext())
+                .asBitmap()
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).override(width, height).error(defaultResId))
+                .into(this);
 
     }
 

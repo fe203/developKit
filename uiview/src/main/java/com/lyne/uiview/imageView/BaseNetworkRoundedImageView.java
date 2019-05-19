@@ -108,15 +108,15 @@ public class BaseNetworkRoundedImageView extends AppCompatImageView {
         if(listener == null){
 
             Glide.with(getContext())
-                    .setDefaultRequestOptions(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA).error(defaultDrawable).transform(mTransformation))
                     .asBitmap()
                     .load(thumbUrl)
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA).error(defaultDrawable).transform(mTransformation))
                     .into(this);
         }else {
             Glide.with(getContext())
-                    .setDefaultRequestOptions(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA).error(defaultDrawable).transform(mTransformation))
                     .asBitmap()
                     .load(thumbUrl)
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA).error(defaultDrawable).transform(mTransformation))
                     .listener(new RequestListener<Bitmap>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
@@ -150,9 +150,9 @@ public class BaseNetworkRoundedImageView extends AppCompatImageView {
         }
 
         Glide.with(getContext())
-                .setDefaultRequestOptions(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA).override(width, height).error(defaultDrawable).transform(mTransformation))
                 .asBitmap()
                 .load(thumbUrl)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA).override(width, height).error(defaultDrawable).transform(mTransformation))
                 .into(this);
     }
 
