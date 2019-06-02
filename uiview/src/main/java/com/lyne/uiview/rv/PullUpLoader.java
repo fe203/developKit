@@ -2,6 +2,7 @@ package com.lyne.uiview.rv;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 
 /**
  * Created by tiny  on 2016/10/25 17:06.
@@ -31,8 +32,8 @@ public class PullUpLoader {
     }
     private void assetLayoutManager(){
         RecyclerView.LayoutManager lm= mRecyclerView.getLayoutManager();
-        if(!(lm instanceof LinearLayoutManager)){
-            throw new IllegalArgumentException("The RecyclerView must have a LinearLayoutManager");
+        if(!(lm instanceof LinearLayoutManager || lm instanceof StaggeredGridLayoutManager)){
+            throw new IllegalArgumentException("The RecyclerView must have a LinearLayoutManager or StaggeredGridLayoutManager");
         }
     }
     public void setLoadMoreEnable(boolean enable){
@@ -58,8 +59,17 @@ public class PullUpLoader {
                 case RecyclerView.SCROLL_STATE_IDLE:
                     assetLayoutManager();
                     int i = recyclerView.getAdapter().getItemCount() - 1;
-                    LinearLayoutManager lm= ((LinearLayoutManager) recyclerView.getLayoutManager());
-                    int last=lm.findLastVisibleItemPosition();
+
+                    RecyclerView.LayoutManager lm = recyclerView.getLayoutManager();
+                    int last = 0;
+                    if (lm instanceof LinearLayoutManager){
+                        last = ((LinearLayoutManager)lm).findLastVisibleItemPosition();
+                    }else if (lm instanceof StaggeredGridLayoutManager){
+                        int[] lasts = ((StaggeredGridLayoutManager)lm).findLastVisibleItemPositions(null);
+                        for (int each : lasts){
+                            last = Math.max(last, each);
+                        }
+                    }
                     if (i <= last) {
                         if(mListener!=null&&enable&&!isLoading()){
                             mListener.onLoadMore();
