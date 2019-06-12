@@ -184,7 +184,7 @@ public class PhotoHelper implements PermissionManager.OnPermissionRequestListene
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(activity, activity.getPackageName() + ".fileProvider", new File(takePhotoPath));
+            Uri contentUri = FileProvider.getUriForFile(activity, activity.getPackageName() + "business.fileProvider", new File(takePhotoPath));
             intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
         } else {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(takePhotoPath)));
@@ -272,9 +272,9 @@ public class PhotoHelper implements PermissionManager.OnPermissionRequestListene
 
         Uri fileUri;
         Uri outputUri;
-        cutPhotoPath = new File(FileUtils.getCacheChildDir(activity, FileUtils.DIR_IMAGES).getAbsolutePath(),System.currentTimeMillis() + FileUtils.JPG_SUFFIX).getPath();
+        cutPhotoPath = new File(FileUtils.getAppChildDir(activity, FileUtils.DIR_IMAGES),System.currentTimeMillis() + FileUtils.JPG_SUFFIX).getPath();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            fileUri = FileProvider.getUriForFile(activity, activity.getPackageName() + ".fileProvider", new File(needCropPathList.get(tempCropPosition)));
+            fileUri = FileProvider.getUriForFile(activity, activity.getPackageName() + ".business.fileProvider", new File(needCropPathList.get(tempCropPosition)));
         } else {
             fileUri = Uri.fromFile(new File(needCropPathList.get(tempCropPosition)));
         }
@@ -291,11 +291,12 @@ public class PhotoHelper implements PermissionManager.OnPermissionRequestListene
             // aspectX aspectY 是宽高的比例
             intent.putExtra("aspectX", ratioX);
             intent.putExtra("aspectY", ratioY);
+            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 
             // outputX,outputY 是剪裁图片的宽高
             intent.putExtra("outputX", imgCutSize);
             intent.putExtra("outputY", imgCutSize / ratioX * ratioY);
-            intent.putExtra("return-data", false);
+//            intent.putExtra("return-data", false);
 
             activity.startActivityForResult(intent, REQ_CODE_CUT_PHOTO);
         }catch (ActivityNotFoundException e) {
