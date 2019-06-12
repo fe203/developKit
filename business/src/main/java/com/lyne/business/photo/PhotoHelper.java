@@ -184,7 +184,7 @@ public class PhotoHelper implements PermissionManager.OnPermissionRequestListene
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(activity, activity.getPackageName() + "business.fileProvider", new File(takePhotoPath));
+            Uri contentUri = FileProvider.getUriForFile(activity, activity.getPackageName() + ".business.fileProvider", new File(takePhotoPath));
             intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
         } else {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(takePhotoPath)));
